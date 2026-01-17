@@ -30,7 +30,7 @@ void main(){
   },
   {
     id: 2,
-    enunt: "Subprogramul sub are trei parametri: n (2<n<50), v (tablou cu n numere naturale de max 4 cifre) și k (1<k<=n). Returnează suma primelor k elemente impare din tablou sau -1 dacă nu există k elemente impare.",
+    enunt: "Subprogramul sub are trei parametri:n (2<n<50), v (tablou cu n numere naturale de max 4 cifre) și k (1<k<=n). Returnează suma primelor k elemente impare din tablou sau -1 dacă nu există k elemente impare.",
     exemplu: "Exemplu: n=8, v=(2, 7, 6, 8, 3, 7, 5, 1), k=3 → returnează 17 (7+3+7).",
     program: `#include <iostream.h>
 #include <conio.h>
