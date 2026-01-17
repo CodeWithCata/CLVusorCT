@@ -1,8 +1,8 @@
 const data = [
   {
     id: 1,
-    enunt: "Se citesc două numere naturale a și b. Calculați și afișați produsul divizorilor comuni ai celor două numere.",
-    exemplu: "Exemplu: pentru a=12, b=18 → divizorii comuni: 2 și 3 → produsul = 6",
+    enunt: "Subprogramul produs are doi parametri, a și b, prin care primește câte un număr natural din intervalul [1, 10^3]. Subprogramul returnează produsul divizorilor naturali comuni lui a și b.",
+    exemplu: "Exemplu: dacă a=20 și b=12, atunci subprogramul returnează valoarea 8 (1 * 2 * 4 = 8).",
     program: `#include <iostream.h>
 #include <conio.h>
 
@@ -13,7 +13,7 @@ int produs(int a, int b){
     else
         nrMaiMic=b;
     
-    for(i=2;i<=nrMaiMic;i++){
+    for(i=1;i<=nrMaiMic;i++){
         if(a%i==0 && b%i==0)
             produs*=i;
     }
@@ -30,8 +30,8 @@ void main(){
   },
   {
     id: 2,
-    enunt: "Se citesc n numere naturale și un număr k. Calculați suma primelor k elemente impare din vector. Dacă nu există suficiente elemente impare, se iau doar cele disponibile.",
-    exemplu: "Exemplu: pentru n=5, k=3, vectorul 1 2 3 4 5 → suma primelor 3 elemente impare = 1+3+5 = 9",
+    enunt: "Subprogramul sub are trei parametri: n (2<n<50), v (tablou cu n numere naturale de max 4 cifre) și k (1<k<=n). Returnează suma primelor k elemente impare din tablou sau -1 dacă nu există k elemente impare.",
+    exemplu: "Exemplu: n=8, v=(2, 7, 6, 8, 3, 7, 5, 1), k=3 → returnează 17 (7+3+7).",
     program: `#include <iostream.h>
 #include <conio.h>
 
@@ -47,7 +47,7 @@ int sub(int n, int v[100], int k){
         }
     }
     
-    if(suma == 0)
+    if(k > 0)
         return -1;
     return suma;
 }
@@ -56,7 +56,6 @@ void main(){
     int i, n, v[100], k;
     cin>>n>>k;
     for(i=1;i<=n;i++){
-        cout<<"Introdu elementul "<<i<<":";
         cin>>v[i];
     }
     cout<<sub(n,v,k);
@@ -65,8 +64,8 @@ void main(){
   },
   {
     id: 3,
-    enunt: "Se citește un număr n. Completați un vector de dimensiune 2n cu valori în formă de valuri: pozițiile impare = index, pozițiile pare = 2n - index + 2.",
-    exemplu: "Exemplu: pentru n=3 → vectorul va fi: 1 6 3 4 5 2",
+    enunt: "Subprogramul valuri construiește un tablou v cu 2*n elemente astfel încât elementele impare să fie strict crescătoare, iar cele pare strict descrescătoare, alternând paritățile (primul element e impar).",
+    exemplu: "Exemplu: n=4 → v=(1, 8, 3, 6, 5, 4, 7, 2).",
     program: `#include <iostream.h>
 #include <conio.h>
 
@@ -91,15 +90,15 @@ void main(){
   },
   {
     id: 4,
-    enunt: "Se citesc n numere naturale într-un vector. Dacă primul element este mai mare sau egal cu următoarele elemente, înlocuiți valorile mai mici sau egale cu 0.",
-    exemplu: "Exemplu: pentru n=5, vectorul 10 5 15 8 12 → rezultatul va fi: 10 0 15 0 12",
+    enunt: "Subprogramul num înlocuiește cu 0 fiecare valoare mai mică sau egală cu prima valoare din tabloul v cu n elemente.",
+    exemplu: "Exemplu: n=7, v=(4, 5, 0, 9, 3, 4, -2) → v=(0, 5, 0, 9, 0, 0, 0).",
     program: `#include <iostream.h>
 #include <conio.h>
 
 void num(int n, int v[100]){
-    int i;
-    for(i=2;i<=n;i++)
-        if(v[1]>=v[i])
+    int i, primul = v[1];
+    for(i=1;i<=n;i++)
+        if(v[i] <= primul)
             v[i]=0;
 }
 
@@ -116,16 +115,16 @@ void main(){
   },
   {
     id: 5,
-    enunt: "Se citește un număr n. Găsiți toate tripletele de numere întregi (k,j,i) cu 0 ≤ k < j < i ≤ n care satisfac ecuația k*j + j*i = n.",
-    exemplu: "Exemplu: pentru n=6 → un triplet posibil: (0,1,2) deoarece 0*1 + 1*2 = 2 ≠ 6 (toate combinațiile trebuie verificate).",
+    enunt: "Subprogramul triplete afișează toate tripletele de numere naturale (x, y, z) cu proprietatea x < y < z și x*y + y*z = n.",
+    exemplu: "Exemplu: n=8 → se afișează (0,1,8), (0,2,4), (1,2,3).",
     program: `#include <iostream.h>
 #include <conio.h>
 
 void triplete(int n){
     int i,j,k;
-    for(i=n;i>=1;i--){
-        for(j=i-1;j>=1;j--){
-            for(k=j-1;k>=0;k--){
+    for(k=0; k<n; k++){
+        for(j=k+1; j<n; j++){
+            for(i=j+1; i<=n; i++){
                 if(k*j + j*i == n)
                     cout<<"("<<k<<","<<j<<","<<i<<")"<<endl;
             }
@@ -142,22 +141,25 @@ void main(){
   },
   {
     id: 6,
-    enunt: "Se citesc două numere a și b. Afișați toate numerele perfecte din intervalul [a,b].",
-    exemplu: "Exemplu: pentru a=1, b=30 → numere perfecte: 6, 28",
+    enunt: "Un număr este perfect dacă este egal cu suma divizorilor săi mai mici decât el. Subprogramul afișează în ordine descrescătoare numerele perfecte din intervalul [a, b].",
+    exemplu: "Exemplu: a=5, b=30 → se afișează 28 6.",
     program: `#include <iostream.h>
 #include <conio.h>
 
 void perfect(int a, int b){
-    int i,s,j;
-    for(i=a;i<=b;i++){
+    int i,s,j, gasit=0;
+    for(i=b; i>=a; i--){
         s=0;
-        for(j=1;j<i;j++){
+        for(j=1; j<=i/2; j++){
             if(i%j==0)
                 s += j;
         }
-        if(s==i)
+        if(s==i && i != 0){
             cout<<i<<" ";
+            gasit = 1;
+        }
     }
+    if(!gasit) cout<<"nu exista";
 }
 
 void main(){
@@ -169,15 +171,17 @@ void main(){
   },
   {
     id: 7,
-    enunt: "Se citește un număr n. Determinați câte cifre impare are n.",
-    exemplu: "Exemplu: pentru n=12345 → cifrele impare: 1,3,5 → rezultat = 3",
+    enunt: "Subprogramul NrPrime returnează numărul de cifre prime ale unui număr natural n (cifrele prime sunt 2, 3, 5, 7).",
+    exemplu: "Exemplu: n=1233405 → returnează valoarea 4 (cifrele 2, 3, 3, 5).",
     program: `#include <iostream.h>
 #include <conio.h>
 
 int nrPrime(int n){
-    int s=0;
+    int s=0, c;
+    if(n == 0) return 0;
     while(n!=0){
-        if(n%10%2!=0)
+        c = n % 10;
+        if(c==2 || c==3 || c==5 || c==7)
             s++;
         n/=10;
     }
@@ -193,22 +197,25 @@ void main(){
   },
   {
     id: 8,
-    enunt: "Se citesc două numere a și b. Afișați toate numerele subperfecte din intervalul [a,b], adică numerele a căror sumă a divizorilor proprii (mai mici decât numărul) este mai mare decât numărul.",
-    exemplu: "Exemplu: pentru a=12, b=20 → numere subperfecte = 12,18,20",
+    enunt: "Un număr este subperfect dacă este strict mai mic decât suma divizorilor săi proprii (divizori diferiți de 1 și el însuși). Afișați descrescător numerele subperfecte din [a, b].",
+    exemplu: "Exemplu: a=10, b=20 → 20 18 12.",
     program: `#include <iostream.h>
 #include <conio.h>
 
 void subperfect(int a,int b){
-    int s,i,j;
-    for(i=a;i<=b;i++){
+    int s,i,j, gasit=0;
+    for(i=b; i>=a; i--){
         s=0;
-        for(j=2;j<i;j++){
+        for(j=2; j<=i/2; j++){
             if(i%j==0)
                 s += j;
         }
-        if(s>i)
+        if(s>i){
             cout<<i<<" ";
+            gasit = 1;
+        }
     }
+    if(!gasit) cout<<"nu exista";
 }
 
 void main(){
@@ -219,4 +226,5 @@ void main(){
 }`
   }
 ]
+
 export default data;
